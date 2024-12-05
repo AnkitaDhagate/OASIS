@@ -1,0 +1,114 @@
+
+import java.util.HashMap;
+import java.util.Scanner;
+
+class User {
+  private String username;
+  private String password;
+
+  public User(String username, String password) {
+    this.username = username;
+    this.password = password;
+  }
+
+  public String getUsername() {
+    return username;
+  }
+
+  public boolean checkPassword(String password) {
+    return this.password.equals(password);
+  }
+}
+
+class Quiz {
+  private String[][] questions = {
+      {"What is the capital of France?", "A. Berlin", "B. Madrid", "C. Paris", "D. Rome"},
+      {"Which is the largest planet in our Solar System?", "A. Earth", "B. Jupiter", "C. Mars", "D. Venus"},
+      {"Who painted the Mona Lisa?", "A. Michelangelo", "B. Leonardo da Vinci", "C. Vincent van Gogh", "D. Pablo Picasso"}
+  };
+  private int score;
+
+  public void startQuiz() {
+    Scanner scanner = new Scanner(System.in);
+    score = 0; // Reset score for each quiz
+
+    System.out.println("Welcome to the Quiz!");
+
+    for (String[] question : questions) {
+      System.out.println("\n" + question[0]); // Print question directly
+      int answer = getValidAnswer(scanner, question.length - 1); // Get answer within range
+      if (answer == Integer.parseInt(question[question.length - 1])) {
+        System.out.println("Correct!");
+        score += 10;
+      } else {
+        System.out.println("Incorrect. The correct answer is: " + question[answer]);
+      }
+    }
+
+    System.out.println("\nQuiz completed! Your score is: " + score);
+  }
+
+  private int getValidAnswer(Scanner scanner, int maxAnswer) {
+    while (true) {
+      System.out.print("Enter your answer (1-" + maxAnswer + "): ");
+      if (scanner.hasNextInt()) {
+        int answer = scanner.nextInt();
+        if (answer >= 1 && answer <= maxAnswer) {
+          return answer - 1; // Adjust for array indexing
+        } else {
+          System.out.println("Invalid answer. Please try again.");
+        }
+      } else {
+        scanner.nextLine(); // Clear invalid input
+        System.out.println("Please enter a number.");
+      }
+    }
+  }
+}
+
+public class QuizSystem {
+  public static void main(String[] args) {
+    Scanner scanner = new Scanner(System.in);
+    HashMap<String, String> users = new HashMap<>(); // Simpler user storage
+    users.put("user1", "pass123");
+
+    String username;
+    String password;
+
+    // Login loop
+    do {
+      System.out.println("Welcome to the Quiz System!");
+      System.out.print("Enter username: ");
+      username = scanner.nextLine();
+      System.out.print("Enter password: ");
+      password = scanner.nextLine();
+    } while (!users.containsKey(username) || !users.get(username).equals(password));
+
+    System.out.println("Login successful! Welcome, " + username + ".");
+
+    boolean continuePlaying = true;
+    while (continuePlaying) {
+      System.out.println("\nMenu:");
+      System.out.println("1. Take Quiz");
+      System.out.println("2. Logout");
+      System.out.print("Enter your choice: ");
+      int choice = scanner.nextInt();
+      scanner.nextLine(); // Consume newline
+
+      switch (choice) {
+        case 1:
+          new Quiz().startQuiz(); // Create a new quiz instance for each attempt
+          break;
+        case 2:
+          System.out.println("Logging out...");
+          continuePlaying = false;
+          break;
+        default:
+          System.out.println("Invalid choice. Please try again.");
+      }
+    }
+
+    System.out.println("Session closed. Goodbye!");
+    scanner.close();
+  }
+}
