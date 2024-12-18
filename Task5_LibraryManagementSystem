@@ -1,0 +1,124 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+class Book {
+    String title;
+    String author;
+    String isbn;
+    boolean isIssued;
+
+    public Book(String title, String author, String isbn) {
+        this.title = title;
+        this.author = author;
+        this.isbn = isbn;
+        this.isIssued = false;
+    }
+
+    @Override
+    public String toString() {
+        return "Title: " + title + ", Author: " + author + ", ISBN: " + isbn + ", Issued: " + isIssued;
+    }
+}
+
+class Member {
+    String name;
+    int memberId;
+
+    public Member(String name, int memberId) {
+        this.name = name;
+        this.memberId = memberId;
+    }
+
+    @Override
+    public String toString() {
+        return "Name: " + name + ", Member ID: " + memberId;
+    }
+}
+
+public class LibraryManagementSystem {
+
+    private List<Book> books = new ArrayList<>();
+    private List<Member> members = new ArrayList<>();
+    private Scanner scanner = new Scanner(System.in);
+
+    public static void main(String[] args) {
+        LibraryManagementSystem library = new LibraryManagementSystem();
+        library.run();
+    }
+
+    public void run() {
+        // Sample Data (for demonstration)
+        books.add(new Book("The Lord of the Rings", "J.R.R. Tolkien", "978-0547928227"));
+        books.add(new Book("Pride and Prejudice", "Jane Austen", "978-0141439518"));
+        members.add(new Member("John Doe", 123));
+        members.add(new Member("Jane Smith", 456));
+
+        while (true) {
+            System.out.println("\nLibrary Management System");
+            System.out.println("1. Admin Login");
+            System.out.println("2. User Login");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
+
+            switch (choice) {
+                case 1:
+                    adminMenu();
+                    break;
+                case 2:
+                    userMenu();
+                    break;
+                case 3:
+                    System.out.println("Exiting...");
+                    return;
+                default:
+                    System.out.println("Invalid choice.");
+            }
+        }
+    }
+
+    private void adminMenu() {
+        // Basic Admin Functionality (Expand as needed)
+        System.out.println("\nAdmin Menu");
+        System.out.println("1. List Books");
+        System.out.println("2. List Members");
+        // Add more admin options (add/remove books/members etc.)
+        int adminChoice = scanner.nextInt();
+        scanner.nextLine();// Consume newline
+        switch (adminChoice) {
+            case 1:
+                for (Book book : books) {
+                    System.out.println(book);
+                }
+                break;
+            case 2:
+                for (Member member : members) {
+                    System.out.println(member);
+                }
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+
+    }
+
+    private void userMenu() {
+        System.out.println("\nUser Menu");
+        System.out.println("1. List Books");
+        // Add issue/return book functionality, search, etc.
+        int userChoice = scanner.nextInt();
+        scanner.nextLine();
+        switch (userChoice) {
+            case 1:
+                for (Book book : books) {
+                    System.out.println(book);
+                }
+                break;
+            default:
+                System.out.println("Invalid choice.");
+        }
+    }
+}
