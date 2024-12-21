@@ -34,7 +34,7 @@ class Book {
         isIssued = issued;
     }
 
-    @Override
+    
     public String toString() {
         return "Book ID: " + id + ", Title: " + title + ", Author: " + author + ", Issued: " + isIssued;
     }
@@ -57,7 +57,7 @@ class User {
         return name;
     }
 
-    @Override
+    
     public String toString() {
         return "User ID: " + id + ", Name: " + name;
     }
